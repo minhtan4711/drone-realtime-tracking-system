@@ -9,20 +9,29 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  redis:
+    image: redis:7
+    container_name: drone-redis
+    ports:
+      - "6379:6379"
+
   backend:
     build: .
     container_name: drone-backend
-    command: npm run dev
     ports:
       - "3000:3000"
     depends_on:
       - mongodb
+      - redis
     environment:
       - MONGO_URI=mongodb://mongodb:27017/drone_sim
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       - PORT=3000
     volumes:
       - .:/app
       - /app/node_modules
+    command: npm run dev
 
 volumes:
   mongo_data:
