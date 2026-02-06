@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: drone-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: .
+    container_name: drone-backend
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/drone_sim
+      - PORT=3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  mongo_data:
