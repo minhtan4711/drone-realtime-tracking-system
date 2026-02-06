@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const controller = require('../controllers/replay.controller')
+const replayController = require('../controllers/replay.controller')
 
-router.get('/', controller.replayAt)
+router.get('/', replayController.replayAt)
 
 module.exports = router
