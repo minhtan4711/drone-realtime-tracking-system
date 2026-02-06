@@ -1,7 +1,8 @@
 const droneService = require('../services/drone.service')
 const { saveSnapshot } = require('../storage/snapshot.store')
+const { broadcastSnapshot } = require('../ws/drone.ws')
 
-function startDroneSimulator({ tickMs = 1000, snapshotEvery = 3000 } = {}) {
+function startDroneSimulator(wss, { tickMs = 1000, snapshotEvery = 3000 } = {}) {
     droneService.initDrones(5)
     let lastSnapshot = 0
 
@@ -9,6 +10,9 @@ function startDroneSimulator({ tickMs = 1000, snapshotEvery = 3000 } = {}) {
     setInterval(async () => {
         const drones = await droneService.updateDrones()
         const now = Date.now()
+
+        // realtime push
+        await broadcastSnapshot(wss, drones)
 
         if (now - lastSnapshot >= snapshotEvery) {
             lastSnapshot = now
