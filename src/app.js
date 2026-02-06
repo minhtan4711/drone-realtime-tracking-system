@@ -1,9 +1,9 @@
-const express = require("express")
-const healthRoute = require("./routes/health.routes")
+const express = require("express");
+const routes = require("./routes");
 
-const app = express()
+const app = express();
+app.use(express.json());
 
-app.use(express.json())
-app.use("/", healthRoute)
+app.use("/api", routes);
 
-module.exports = app
+module.exports = app;
