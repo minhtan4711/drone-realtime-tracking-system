@@ -2,7 +2,7 @@ const droneService = require('../services/drone.service')
 const { saveSnapshot } = require('../storage/snapshot.store')
 const { broadcastSnapshot } = require('../ws/drone.ws')
 
-function startDroneSimulator(wss, { tickMs = 1000, snapshotEvery = 3000 } = {}) {
+function startDroneSimulator(wss, { tickMs = 1000, snapshotEvery = 1000 } = {}) {
     droneService.initDrones(5)
     let lastSnapshot = 0
 
