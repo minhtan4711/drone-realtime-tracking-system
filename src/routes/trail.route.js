@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const trailService = require('../services/trail.service')
 const droneService = require('../services/drone.service')
+const trailController = require('../controllers/trail.controller')
 
 router.get('/window', async (req, res) => {
     try {
@@ -20,5 +21,7 @@ router.get('/window', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch trail window' })
     }
 })
+
+router.get("/:droneId", trailController.getTrailByDrone)
 
 module.exports = router
