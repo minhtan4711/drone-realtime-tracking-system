@@ -3,19 +3,24 @@ const trailStore = require('../storage/trail.store')
 const { v4: uuidv4 } = require('uuid')
 const { haversineMeters } = require('../utils/geo')
 const provinces = require('../data/vietnam.province')
+const {
+    STATUS_ACTIVE,
+    STATUS_PENDING,
+    STATUS_OFFLINE,
+    DIST_THRESHOLD_METERS,
+    MAX_LOG_INTERVAL_MS,
+    SPAWN_RADIUS_KM,
+    MOVE_PROB,
+    TURN_PROB,
+    SPEED_MIN,
+    SPEED_MAX,
+    PENDING_AFTER_MS,
+    OFFLINE_AFTER_MS,
+} = require('../constants/drone.constants')
 
 let drones = []
 
 const lastLogged = new Map() // droneId -> { lat, lng, ts }
-
-const DIST_THRESHOLD_METERS = 15
-const MAX_LOG_INTERVAL_MS = 5000
-const SPAWN_RADIUS_KM = 20
-
-const MOVE_PROB = 0.25
-const TURN_PROB = 0.1
-const SPEED_MIN = 5
-const SPEED_MAX = 20
 
 function randomOffsetKm(km) {
     const delta = km / 111
@@ -30,27 +35,37 @@ function spawnNear(lat, lng, radiusKm) {
 }
 
 function createDrone({ lat, lng }) {
+    const speed = SPEED_MIN + Math.random() * (SPEED_MAX - SPEED_MIN)
+    const now = Date.now()
     return {
         id: uuidv4(),
         lat,
         lng,
         heading: Math.random() * 360,
-        speed: 10 + Math.random() * 20,
-        status: "ACTIVE",
-        ts: Date.now(),
+        speed,
+        lastMovedAt: now,
+        status: STATUS_ACTIVE,
+        ts: now,
     }
 }
 
 function moveDrone(drone, dtMs = 1000) {
-    // 75% drone stay still
-    if (Math.random() > MOVE_PROB) {
-        return { ...drone, ts: Date.now() }
-    }
-
+    const now = Date.now()
     let heading = drone.heading
     let speed = drone.speed
 
-    // change direction
+    // most drones stay still to mimic sparse movement.
+    if (Math.random() > MOVE_PROB) {
+        speed = 0
+        return {
+            ...drone,
+            speed,
+            status: computeStatus(drone.lastMovedAt, now),
+            ts: now,
+        }
+    }
+
+    // change direction and speed for more natural paths
     if (Math.random() < TURN_PROB) {
         heading = Math.random() * 360
         speed = SPEED_MIN + Math.random() * (SPEED_MAX - SPEED_MIN)
@@ -59,12 +74,14 @@ function moveDrone(drone, dtMs = 1000) {
     const dt = dtMs / 1000
     const distance = speed * dt // meters
 
-    // meter → lat/lng
+    // meters -> lat/lng
     const dLat = (distance / 111320) * Math.cos((heading * Math.PI) / 180)
     const dLng =
         (distance /
             (111320 * Math.cos((drone.lat * Math.PI) / 180))) *
         Math.sin((heading * Math.PI) / 180)
+
+    const lastMovedAt = speed > 0 ? now : drone.lastMovedAt
 
     return {
         ...drone,
@@ -72,8 +89,17 @@ function moveDrone(drone, dtMs = 1000) {
         lng: drone.lng + dLng,
         heading,
         speed,
-        ts: Date.now(),
+        status: computeStatus(lastMovedAt, now),
+        lastMovedAt,
+        ts: now,
     }
+}
+
+function computeStatus(lastMovedAt, now) {
+    const idleFor = now - lastMovedAt
+    if (idleFor >= OFFLINE_AFTER_MS) return STATUS_OFFLINE
+    if (idleFor >= PENDING_AFTER_MS) return STATUS_PENDING
+    return STATUS_ACTIVE
 }
 
 async function initDrones(count) {

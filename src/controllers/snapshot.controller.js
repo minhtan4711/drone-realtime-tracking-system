@@ -1,4 +1,5 @@
 const snapshotService = require('../services/snapshot.service')
+const { parseStatusList } = require('../utils/status')
 
 async function replayAt(req, res, next) {
     try {
@@ -12,7 +13,12 @@ async function replayAt(req, res, next) {
             return res.status(400).json({ error: 'Invalid ts query parameter' })
         }
 
-        const snapshot = await snapshotService.getSnapshotAt(date)
+        const statusSet = parseStatusList(req.query.status)
+        if (req.query.status !== undefined && !statusSet) {
+            return res.status(400).json({ error: 'Invalid status filter' })
+        }
+
+        const snapshot = await snapshotService.getSnapshotAt(date, statusSet)
         if (!snapshot) {
             return res.status(404).json({ error: 'No snapshot found' })
         }
