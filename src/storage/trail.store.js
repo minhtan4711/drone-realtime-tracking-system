@@ -1,6 +1,6 @@
 const redis = require('../config/redis')
 
-const WINDOW_MS = 5 * 60 * 1000 // 5 minutes
+const WINDOW_MS = 15 * 60 * 1000 // keep last 15 minutes of positions per drone
 
 function key(droneId) {
     return `trail:${droneId}`
