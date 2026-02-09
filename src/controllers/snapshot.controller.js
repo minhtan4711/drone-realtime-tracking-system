@@ -1,4 +1,4 @@
-const replayService = require('../services/replay.service')
+const snapshotService = require('../services/snapshot.service')
 
 async function replayAt(req, res, next) {
     try {
@@ -12,7 +12,7 @@ async function replayAt(req, res, next) {
             return res.status(400).json({ error: 'Invalid ts query parameter' })
         }
 
-        const snapshot = await replayService.getSnapshotAt(date)
+        const snapshot = await snapshotService.getSnapshotAt(date)
         if (!snapshot) {
             return res.status(404).json({ error: 'No snapshot found' })
         }
