@@ -1,0 +1,37 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.8">
+  <diagram id="uc-replay" name="Replay">
+    <mxGraphModel dx="1186" dy="730" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="actor" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" value="Người vận hành" vertex="1">
+          <mxGeometry height="80" width="40" x="70" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_main" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;" value="Tái hiện dữ liệu theo thời gian&#xa;(Replay)" vertex="1">
+          <mxGeometry height="70" width="240" x="230" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_sub1" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" value="Chọn mốc thời gian&#xa;(trên timeline)" vertex="1">
+          <mxGeometry height="60" width="190" x="540" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_sub2" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" value="Xem trạng thái &amp; vị trí drone&#xa;ở thời điểm đã chọn" vertex="1">
+          <mxGeometry height="60" width="230" x="520" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_sub3" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" value="Phát / Tạm dừng&#xa;(Play / Pause)" vertex="1">
+          <mxGeometry height="60" width="170" x="550" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="e_actor_main" edge="1" parent="1" source="actor" style="endArrow=none;html=1;" target="uc_main">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inc1" edge="1" parent="1" source="uc_main" style="dashed=1;endArrow=open;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_sub1" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inc2" edge="1" parent="1" source="uc_main" style="dashed=1;endArrow=open;html=1;" target="uc_sub2" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inc3" edge="1" parent="1" source="uc_main" style="dashed=1;endArrow=open;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_sub3" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
