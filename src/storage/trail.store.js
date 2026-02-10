@@ -1,6 +1,6 @@
 const redis = require('../config/redis')
 
-const WINDOW_MS = 15 * 60 * 1000 // keep last 15 minutes of positions per drone
+const WINDOW_MS = 5 * 60 * 1000 // keep last 5 minutes of positions
 
 function key(droneId) {
     return `trail:${droneId}`
@@ -35,31 +35,7 @@ async function getTrailWindow(droneId, fromTs, toTs) {
 }
 
 
-async function getMultiTrailWindow(droneIds, fromTs, toTs) {
-    if (!droneIds || droneIds.length === 0) return {}
-
-    const pipeline = redis.pipeline()
-    const keys = droneIds.map(id => key(id))
-
-    for (const k of keys) {
-        pipeline.zrangebyscore(k, fromTs, toTs)
-    }
-
-    const results = await pipeline.exec()
-
-    const out = {}
-    for (let i = 0; i < droneIds.length; i++) {
-        const rows = results[i][1]
-        if (rows && rows.length > 0) {
-            out[droneIds[i]] = rows.map(v => JSON.parse(v))
-        }
-    }
-
-    return out
-}
-
 module.exports = {
     appendMany,
     getTrailWindow,
-    getMultiTrailWindow,
 }

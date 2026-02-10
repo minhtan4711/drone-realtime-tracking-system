@@ -1,0 +1,33 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.8">
+  <diagram id="uc-live" name="Live Monitoring">
+    <mxGraphModel dx="1186" dy="1557" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="actor" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" value="Người vận hành" vertex="1">
+          <mxGeometry height="80" width="40" x="100" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_main" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;" value="Theo dõi drone thời gian thực" vertex="1">
+          <mxGeometry height="70" width="240" x="240" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_sub2" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" value="Hiển thị vị trí và trạng thái trên bản đồ" vertex="1">
+          <mxGeometry height="60" width="240" x="480" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_sub4" parent="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" value="Xem thống kê nhanh (tổng số, theo trạng thái)" vertex="1">
+          <mxGeometry height="60" width="220" x="480" y="-20" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;" target="uc_main">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="230" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="uc_main" style="dashed=1;endArrow=block;endFill=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc_sub2" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="uc_main" style="dashed=1;endArrow=block;endFill=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.767;exitY=0.1;exitDx=0;exitDy=0;exitPerimeter=0;" target="uc_sub4" value="&lt;&lt;include&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
