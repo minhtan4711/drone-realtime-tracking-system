@@ -13,11 +13,14 @@ async function bootstrap() {
     await connectMongoDB()
 
     const server = http.createServer(app)
+
+    // attach WebSocket server for realtime drone updates
     const wss = new WebSocketServer({
         server,
         path: '/ws/drones',
     })
 
+    // initialize webSocket handlers and simulator loop
     setupDroneWS(wss)
     startDroneSimulator(wss)
 

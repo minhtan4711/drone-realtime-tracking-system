@@ -20,6 +20,7 @@ const {
 
 let drones = []
 
+// track last trail point per drone to decide when to log a new point.
 const lastLogged = new Map() // droneId -> { lat, lng, ts }
 
 function randomOffsetKm(km) {
@@ -35,6 +36,7 @@ function spawnNear(lat, lng, radiusKm) {
 }
 
 function createDrone({ lat, lng }) {
+    // start with a reasonable moving speed to keep most drones ACTIVE.
     const speed = SPEED_MIN + Math.random() * (SPEED_MAX - SPEED_MIN)
     const now = Date.now()
     return {
@@ -65,7 +67,7 @@ function moveDrone(drone, dtMs = 1000) {
         }
     }
 
-    // change direction and speed for more natural paths
+    // occasionally change direction/speed for more natural
     if (Math.random() < TURN_PROB) {
         heading = Math.random() * 360
         speed = SPEED_MIN + Math.random() * (SPEED_MAX - SPEED_MIN)
@@ -74,7 +76,7 @@ function moveDrone(drone, dtMs = 1000) {
     const dt = dtMs / 1000
     const distance = speed * dt // meters
 
-    // meters -> lat/lng
+    // meters -> degrees conversion (approximation).
     const dLat = (distance / 111320) * Math.cos((heading * Math.PI) / 180)
     const dLng =
         (distance /
@@ -96,6 +98,7 @@ function moveDrone(drone, dtMs = 1000) {
 }
 
 function computeStatus(lastMovedAt, now) {
+    // status is derived from how long the drone has been idle.
     const idleFor = now - lastMovedAt
     if (idleFor >= OFFLINE_AFTER_MS) return STATUS_OFFLINE
     if (idleFor >= PENDING_AFTER_MS) return STATUS_PENDING
@@ -103,6 +106,7 @@ function computeStatus(lastMovedAt, now) {
 }
 
 async function initDrones(count) {
+    // spawn drone randomly accross Vietnam
     drones = []
     lastLogged.clear()
 
@@ -122,6 +126,7 @@ async function initDrones(count) {
     await droneStore.saveMany(drones)
 
     const now = Date.now()
+    // seed initial trail points so each drone has a starting position.
     const initialPositions = drones.map((d) => ({
         droneId: d.id,
         lat: d.lat,
@@ -157,6 +162,7 @@ async function updateDrones() {
             const dist = haversineMeters(last.lat, last.lng, d.lat, d.lng)
             const dt = now - last.ts
 
+            // log trail if the drone moved far enough or too much time passed.
             if (dist >= DIST_THRESHOLD_METERS || dt >= MAX_LOG_INTERVAL_MS) {
                 shouldLog = true
             }

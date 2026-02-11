@@ -3,6 +3,7 @@ const { filterDronesByStatus } = require('../utils/status')
 
 
 function emptyStats() {
+    // keep a fixed shape for status counts
     return {
         ACTIVE: 0,
         PENDING: 0,
@@ -26,6 +27,7 @@ async function getSnapshotAt(ts, statusSet) {
     const snap = await snapshotStore.getSnapshotAt(ts)
     if (!snap) return null
 
+    // apply status filter before returning to client.
     const filteredDrones = filterDronesByStatus(snap.drones, statusSet)
 
     return {
