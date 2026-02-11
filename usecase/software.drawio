@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.8">
+  <diagram name="Page-1" id="dAskIvtIwIKwqoEbaQis">
+    <mxGraphModel dx="1186" dy="730" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-35" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FFF3E0;gradientColor=#ffd966;strokeColor=#E65100;" value="Backend" vertex="1">
+          <mxGeometry height="220" width="584" x="757" y="301" as="geometry" />
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-36" parent="1" style="ellipse;aspect=fixed;strokeWidth=2;whiteSpace=wrap;" value="Người dùng" vertex="1">
+          <mxGeometry height="97" width="97" x="610" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-37" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=#E1F5FE;strokeColor=#01579B;" value="Frontend - React" vertex="1">
+          <mxGeometry height="54" width="180" x="782" y="212" as="geometry" />
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-38" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FFF3E0;gradientColor=#ffa500;strokeColor=#E65100;" value="Backend Server" vertex="1">
+          <mxGeometry height="54" width="170" x="1146" y="389" as="geometry" />
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-39" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="Drone Simulator" vertex="1">
+          <mxGeometry height="54" width="175" x="785" y="432" as="geometry" />
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-40" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;gradientColor=#ea6b66;" value="Redis - Realtime" vertex="1">
+          <mxGeometry height="77" width="131" x="1399" y="313" as="geometry" />
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-41" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;" value="MongoDB - Snapshot" vertex="1">
+          <mxGeometry height="79" width="145" x="1392" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-42" edge="1" parent="1" source="bWrBEUwa4nt47xxkJCkB-36" style="curved=1;startArrow=block;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.49;rounded=0;" target="bWrBEUwa4nt47xxkJCkB-37" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-43" edge="1" parent="1" source="bWrBEUwa4nt47xxkJCkB-37" style="curved=1;startArrow=block;endArrow=block;exitX=0.75;exitY=0.99;entryX=0.09;entryY=0;rounded=0;" target="bWrBEUwa4nt47xxkJCkB-38" value="WebSocket / HTTP">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1055" y="348" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-44" edge="1" parent="1" source="bWrBEUwa4nt47xxkJCkB-39" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.88;rounded=0;" target="bWrBEUwa4nt47xxkJCkB-38" value="Cập nhật dữ liệu">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1055" y="459" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-45" edge="1" parent="1" source="bWrBEUwa4nt47xxkJCkB-38" style="curved=1;startArrow=block;endArrow=block;exitX=0.78;exitY=0;entryX=0;entryY=0.5;rounded=0;" target="bWrBEUwa4nt47xxkJCkB-40" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1342" y="352" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bWrBEUwa4nt47xxkJCkB-46" edge="1" parent="1" source="bWrBEUwa4nt47xxkJCkB-38" style="curved=1;startArrow=block;endArrow=block;exitX=0.78;exitY=1;entryX=0;entryY=0.51;rounded=0;" target="bWrBEUwa4nt47xxkJCkB-41" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1342" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

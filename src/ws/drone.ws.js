@@ -1,6 +1,7 @@
 const droneService = require('../services/drone.service')
 const { parseStatusList, filterDronesByStatus } = require('../utils/status')
 
+// per-connection status filter
 const clientFilters = new WeakMap() // ws -> Set(status)
 
 function setupDroneWS(wss) {
@@ -9,6 +10,7 @@ function setupDroneWS(wss) {
     wss.on('connection', async (ws) => {
         console.log('Client connected to drone WebSocket.')
 
+        // send initial snapshot on connect.
         const drones = await droneService.getAllDrones()
         const filter = clientFilters.get(ws)
 
@@ -24,6 +26,7 @@ function setupDroneWS(wss) {
             clientFilters.delete(ws)
         })
 
+        // client can update filter: { type: 'filter', status: 'ACTIVE,PENDING' }
         ws.on('message', (data) => {
             try {
                 const msg = JSON.parse(data.toString())
@@ -34,15 +37,16 @@ function setupDroneWS(wss) {
                 } else {
                     clientFilters.delete(ws)
                 }
-            } catch {
-                // Ignore malformed messages
+            } catch (err) {
+                console.log("error: ", err)
             }
         })
     })
 }
 
-async function broadcastSnapshot(wss) {
-    const drones = await droneService.getAllDrones()
+async function broadcastSnapshot(wss, drones) {
+    // use provided snapshot if available to avoid extra Redis reads
+    const payloadDrones = drones ?? await droneService.getAllDrones()
     const ts = Date.now()
 
     wss.clients.forEach((client) => {
@@ -52,7 +56,7 @@ async function broadcastSnapshot(wss) {
                 type: 'snapshot',
                 mode: 'tick',
                 ts,
-                data: filterDronesByStatus(drones, filter),
+                data: filterDronesByStatus(payloadDrones, filter),
             }))
         }
     })

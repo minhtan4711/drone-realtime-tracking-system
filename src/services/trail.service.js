@@ -1,7 +1,6 @@
 const trailStore = require('../storage/trail.store')
-const droneStore = require('../storage/drone.store')
 
-async function getTrailByDroneId(droneId, now = Date.now(), windowMs = 15 * 60 * 1000) {
+async function getTrailByDroneId(droneId, now = Date.now(), windowMs = 5 * 60 * 1000) {
     const from = now - windowMs
     const to = now
 

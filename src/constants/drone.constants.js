@@ -7,17 +7,17 @@ const ALLOWED_STATUSES = [
     STATUS_OFFLINE,
 ]
 
-const DIST_THRESHOLD_METERS = 15 // Minimum movement before writing a new trail point.
-const MAX_LOG_INTERVAL_MS = 5000 // Max time between trail points even if drone barely moves.
-const SPAWN_RADIUS_KM = 20 // Initial spawn radius around each province center.
+const DIST_THRESHOLD_METERS = 15 // minimum movement before writing a new trail point
+const MAX_LOG_INTERVAL_MS = 5000 // max time between trail points even if drone barely moves
+const SPAWN_RADIUS_KM = 20 // initial spawn radius around each province center
 
-const MOVE_PROB = 0.8 // Probability that a drone moves on a tick (higher to keep ACTIVE dominant).
-const TURN_PROB = 0.15 // Probability to change direction and speed on a tick.
-const SPEED_MIN = 8 // Min moving speed when changing direction (meters/second).
-const SPEED_MAX = 15 // Max moving speed when changing direction (meters/second).
+const MOVE_PROB = 0.8 // probability that a drone moves on a tick
+const TURN_PROB = 0.15 // probability to change direction and speed on a tick
+const SPEED_MIN = 8 // min moving speed when changing direction
+const SPEED_MAX = 15 // max moving speed when changing direction
 
-const PENDING_AFTER_MS = 50000 // No movement for this long becomes PENDING.
-const OFFLINE_AFTER_MS = 60000 // No movement for this long becomes OFFLINE.
+const PENDING_AFTER_MS = 50000 // no movement -> PENDING
+const OFFLINE_AFTER_MS = 60000 // no movement -> OFFLINE
 
 module.exports = {
     STATUS_ACTIVE,
